@@ -7,19 +7,21 @@ WORKDIR /usr/src/app
 # Copy dependency definitions
 COPY package*.json ./
 
-# Install production dependencies only
+# Install production dependencies only + PM2 globally
 RUN npm install --production && npm install -g pm2
 
 # Copy the rest of the application code
 COPY . .
 
-# Expose your app port (from config.js → 5000)
+# Expose the app port
 EXPOSE 5000
 
-# Set environment (optional)
+# Environment variables
 ENV NODE_ENV=production
 ENV PORT=5000
+ENV REDIS_PORT=6379
+ENV REDIS_HOST=redis 
 
-# Start the app with pm2-runtime + ecosystem config
+# Start the app using pm2-runtime and ecosystem config
+# Ensure your eco.config.js uses cluster mode to prevent EADDRINUSE
 CMD ["pm2-runtime", "src/eco.config.js", "--env", "production"]
-
