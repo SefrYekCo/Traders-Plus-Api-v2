@@ -7,7 +7,7 @@ module.exports = {
             ignore_watch : ["node_modules", "public"],
             env_local: {
                 "NODE_ENV": "development",
-                "PAYMENT_URL": "http://localhost:5000",
+                "PAYMENT_URL": "http://api:5000",
                 "NEWS_ADMIN_USER_ID": "60f572848fb7f25905ef3c1a",
                 "BOURSE_RSS_CHANNEL_ID":"",
                 "CAR_AND_HOUSING_RSS_CHANNEL_ID":"",
