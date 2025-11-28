@@ -3,9 +3,9 @@ module.exports = {
     {
       name: "api",
       script: "src/server.js",
-      watch: true,
-      exec_mode: "fork",
-      instances: 1,
+      instances: "max", // automatically use all CPUs
+      exec_mode: "cluster", // enable PM2 cluster mode
+      watch: false,
       ignore_watch: ["node_modules", "public"],
       env_local: {
         NODE_ENV: "development",
