@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Result</title>
+    <style>
+        .textCenter {
+            text-align: center;
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 16px 16px;
+            text-align: center;
+            alignment: center;
+            position: relative;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+
+        }
+
+        .button1 {
+            alignment: center;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            border: 2px solid #4CAF50;
+        }
+
+        .button2 {
+            alignment: center;
+            background-color: #f5503b;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            border: 2px solid #f5503b;
+        }
+
+        .center {
+            display: table;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" class="center">
+        <H1 id="tPLus">TradersPlus</H1>
+        <p id="tranStatusMessage" class="textCenter"></p>
+        <p id="tranID" class="textCenter"></p>
+        <p id="timer" class="textCenter"></p>
+    </div>
+    <div id="buttonD" class="center">
+        <button onclick="backToAppSuccess()" id="successBtn" class="button button1" style="display:none">برگشت به
+            سایت
+        </button>
+        <button onclick="backToAppStateFailed()" id="failedBtn" class="button button2" style="display:none">برگشت به
+            سایت
+        </button>
+    </div>
+    <script>
+        document.addEventListener("keydown", function (e) {
+            // USE THIS TO DISABLE CONTROL AND ALL FUNCTION KEYS
+            // if (e.ctrlKey || (e.keyCode>=112 && e.keyCode<=123)) {
+            // THIS WILL ONLY DISABLE CONTROL AND F12
+            if (e.ctrlKey || e.keyCode == 123) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        }, false);
+    </script>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('invoiceId');
+        startTimer()
+        const TIME_LIMIT = 6;
+        let timePassed = 0;
+        let timeLeft = TIME_LIMIT;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timePassed = timePassed += 1;
+                timeLeft = TIME_LIMIT - timePassed;
+                if (timeLeft >= 0)
+                    document.getElementById("timer").innerHTML = (timeLeft);
+            }, 1000);
+        }
+
+        function backToAppSuccess() {
+            window.location.href = 'https://traderzplus.ir';
+        }
+
+        function backToAppStateFailed() {
+            window.location.href = 'https://traderzplus.ir';
+        }
+
+        getResult()
+
+        function getResult() {
+            console.log('invoiceId:', id)
+
+            let url = window.location.protocol + '//' + window.location.host + "/api/v1/payment/get-result"
+            const http = new XMLHttpRequest()
+            http.open('POST', url)
+            http.setRequestHeader('Content-type', 'application/json')
+            http.send(JSON.stringify({ invoice: id })) // Make sure to stringify
+            http.onload = function () {
+                // Do whatever with response
+                let res = JSON.parse(http.response)
+                let msgId = "tranStatusMessage"
+                let tranID = "tranID"
+                if (res.status) {
+                    document.getElementById(msgId).innerHTML = "عملیات باموفقیت انجام شد"
+                    document.getElementById("successBtn").style.display = "block"
+                    document.getElementById(tranID).innerHTML = "کد پیگیری:" + id
+                    setTimeout(function () {
+                        window.location.href = 'https://traderzplus.ir';
+                    }, 5000);
+                } else {
+                    document.getElementById(msgId).innerHTML = "عملیات پرداخت با خطا مواجه شد"
+                    document.getElementById(tranID).innerHTML = "کد پیگیری:" + id
+                    document.getElementById("failedBtn").style.display = "block"
+                    setTimeout(function () {
+                        window.location.href = 'https://traderzplus.ir';
+                    }, 5000);
+                }
+                console.log(res)
+            }
+        }
+    </script>
+
+</body>
+
+<script>
+    window.onload = function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('invoiceid');
+
+        document.getElementById('output').innerHTML = myParam;
+    };
+
+
+</script>
+
+</html>

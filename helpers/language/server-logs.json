@@ -1,0 +1,5 @@
+{
+    "mongo-db-connected": "MongoDB connected to server successfully!",
+    "server-running": "Server is running at port: ",
+    "server-500": "Internal server error."
+}
