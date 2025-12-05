@@ -1,23 +1,27 @@
-# Use Node.js 14 LTS
+# Use official Node.js LTS
 FROM node:14
 
 # Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json first for caching
+# Copy dependency definitions
 COPY package*.json ./
 
-# Install dependencies and PM2 globally
+# Install production dependencies only + PM2 globally
 RUN npm install --production && npm install -g pm2
 
-# Copy the rest of the project
+# Copy the rest of the application code
 COPY . .
 
-# Expose ports
-EXPOSE 5000 5001
+# Expose the app port
+EXPOSE 5000
 
-# Set environment variable (can be overridden by docker run)
+# Environment variables
 ENV NODE_ENV=production
+ENV PORT=5000
+ENV REDIS_PORT=6379
+ENV REDIS_HOST=redis 
 
-# Start the API with PM2 using ecosystem file
+# Start the app using pm2-runtime and ecosystem config
+# Ensure your eco.config.js uses cluster mode to prevent EADDRINUSE
 CMD ["pm2-runtime", "src/eco.config.js", "--env", "production"]
