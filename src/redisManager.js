@@ -2,12 +2,9 @@ const redis = require("redis");
 const utils = require("./utils.js");
 const REDIS_HOST = process.env.REDIS_HOST || "redis"; // container name or network alias
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
-const client = redis.createClient({
-  socket: {
-    host: REDIS_HOST,
-    port: REDIS_PORT,
-  },
-});
+
+const client = redis.createClient(REDIS_PORT, REDIS_HOST);
+
 const util = require("util");
 
 client.get = util.promisify(client.get);
