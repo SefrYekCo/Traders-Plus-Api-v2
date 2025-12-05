@@ -4,8 +4,7 @@ module.exports = {
       name: "api",
       script: "src/server.js",
       watch: true,
-      exec_mode: "fork",
-      instances: 1,
+      instances: "max",
       ignore_watch: ["node_modules", "public"],
       env_local: {
         NODE_ENV: "development",
