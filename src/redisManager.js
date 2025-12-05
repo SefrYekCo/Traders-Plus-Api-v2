@@ -4,8 +4,8 @@ const REDIS_HOST = process.env.REDIS_HOST || "redis";
 const REDIS_PORT = process.env.PORT || 6379;
 const client = redis.createClient({
   socket: {
-    host: "redis",
-    port: 6379,
+    host: REDIS_HOST,
+    port: REDIS_PORT,
   },
 });
 const util = require("util");
