@@ -1,4 +1,4 @@
-exports.mongoBaseURI = 'mongodb://admin:dfgfe3434DgdEG!@mongodb:27017'
+exports.mongoBaseURI = 'mongodb://admin:11QAmk280SQ0MOqcV@mongodb:27017'
 exports.databaseName = 'tradersplus'
 exports.mongoURI = `${this.mongoBaseURI}/${this.databaseName}?readPreference=primary&ssl=false&authSource=admin`
 exports.userSms = "sefryek";

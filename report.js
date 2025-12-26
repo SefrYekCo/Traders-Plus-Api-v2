@@ -5,7 +5,7 @@ const Transaction = require('./models/schemas/transaction');
 
 const runner = async () => {
     try {
-        await mongoose.connect('mongodb://admin:dfgfe3434DgdEG!@mongodb:27017/tradersplus?readPreference=primary&ssl=false&authSource=admin', {
+        await mongoose.connect('mongodb://admin:11QAmk280SQ0MOqcV@mongodb:27017/tradersplus?readPreference=primary&ssl=false&authSource=admin', {
             useCreateIndex: true,
             useFindAndModify: false,
             useNewUrlParser: true,
