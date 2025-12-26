@@ -1,6 +1,6 @@
 exports.mongoBaseURI = 'mongodb://admin:dfgfe3434DgdEG!@mongodb:27017'
 exports.databaseName = 'tradersplus'
-exports.mongoURI = `mongodb://admin:dfgfe3434DgdEG!@mongodb:27017/tradersplus?authSource=admin`
+exports.mongoURI = `${this.mongoBaseURI}/${this.databaseName}?readPreference=primary&ssl=false&authSource=admin`
 exports.userSms = "sefryek";
 exports.passSms = "J3kyseVYvR48jKas";
 exports.senderNumber = "5000151011"
